@@ -4,7 +4,7 @@ using namespace std;
 
 int main()
 {
-	unsigned int inputNumber = 0;
+	int inputNumber = 0;
 	int day = 0;
 	int month = 0;
 	int year = 0;
@@ -49,6 +49,21 @@ int main()
 	}
 
 	cout << "\nThe number of control bits is: " << countControlBits;
+
+
+	//Checks the most significant bit
+	if (countControlBits % 2 == 0) {
+		if ((inputNumber & (1 << 31)) == 0) {
+			cout << "\n\n The number is correct!";
+		}
+	}
+
+	// Has to check the most significant bit as well - not finished 
+	if (countControlBits % 2 == 1) {
+		if ((inputNumber & (1 << 31)) == 0) {
+
+		}
+	}
 
 
 

@@ -2,6 +2,12 @@
 
 using namespace std;
 
+//Needed for the counting of the days
+int monthDays[12] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+
+bool isLeapYear(int year);
+int dateToNumber(int day, int month, int year);
+
 int main()
 {
 	unsigned int inputNumber = 0;
@@ -43,6 +49,10 @@ int main()
 		cout << "\nInvalid!";
 		return 0;
 	}
+
+	//Turns the days to numbers
+	int days1 = dateToNumber(currentDay,currentMonth,currentYear);
+	int days2 = dateToNumber(day, month, year+1900);
 
 
 	cout << "\nCurrent date is: 0" << currentDay << "." << currentMonth << "." << currentYear;
@@ -88,4 +98,27 @@ int main()
 
 }
 
+//Checks if the year is a leap year
+bool isLeapYear(int year) {
+	if ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0))
+		return true;
+	return false;
+}
+
+//Turns the date into a number
+int dateToNumber(int day, int month, int year) {
+	int days = year * 365 + day;
+
+	for (int i = 0; i < month - 1; i++) {
+		days += monthDays[i];
+	}
+
+	if (month > 2 && isLeapYear(year)) {
+		days += 1;
+	}
+
+	days += (year / 4) - (year / 100) + (year / 400);
+
+	return days;
+}
 

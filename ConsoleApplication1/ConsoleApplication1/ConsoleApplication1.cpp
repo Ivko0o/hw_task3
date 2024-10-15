@@ -4,7 +4,7 @@ using namespace std;
 
 int main()
 {
-	int inputNumber = 0;
+	unsigned int inputNumber = 0;
 	int day = 0;
 	int month = 0;
 	int year = 0;
@@ -26,21 +26,34 @@ int main()
 
 	//Checks the day of the expiry date
 	day = inputNumber & check_Day;
-	cout << "\n" << "Day: " << day;
 
 	//Checks the month of the expiry date
 	month = (inputNumber & check_Month) >> 5;
-	cout << "\n" << "Month: " << month;
+
 
 	//Checks the year of the expiry date
 	year = (inputNumber & check_Year) >> 9;
-	cout << "\n" << "Year: " << year + 1900;
+
+	//Checks the if the day and month are appropriate format
+	if (day > 31) {
+		cout << "\nInvalid!";
+		return 0;
+	}
+	else if (month > 12) {
+		cout << "\nInvalid!";
+		return 0;
+	}
+
+
+	cout << "\nCurrent date is: 0" << currentDay << "." << currentMonth << "." << currentYear;
+	cout << "\nThe production date of the product is: " << day << "." << month << "." << year + 1900;
+
 
 	//Checks the length of the expiration date in days
 	lengthExpiryDate = (inputNumber & check_Length_Expiry_Date) >> 18;
 	cout << "\n" << "Length of the expiry date in days: " << lengthExpiryDate;
 
-	//Checks if the number of control bits is even or odd
+	//Checks the number of controlled bits
 	for (int i = 0; i < 31; i++) {
 		if ((inputNumber & check_Control_Bits) != 0) {
 			countControlBits++;
@@ -48,25 +61,31 @@ int main()
 		check_Control_Bits += check_Control_Bits;
 	}
 
-	cout << "\nThe number of control bits is: " << countControlBits;
+	cout << "\n\nThe number of control bits is: " << countControlBits;
 
 
 	//Checks the most significant bit
 	if (countControlBits % 2 == 0) {
 		if ((inputNumber & (1 << 31)) == 0) {
-			cout << "\n\n The number is correct!";
+			cout << "\n\nThe number is correct!";
+		}
+		if ((inputNumber & (1 << 31)) != 0) {
+			cout << "\n\nInvalid!";
+			return 0;
 		}
 	}
 
-	// Has to check the most significant bit as well - not finished 
+	//Checks the most significant bit and turn is to 1 if the number of control bits is odd
 	if (countControlBits % 2 == 1) {
-		if ((inputNumber & (1 << 31)) == 0) {
-
+		if ((inputNumber & (1 << 31)) != 1) {
+			cout << "\nThe number is correct!";
+		}
+		if ((inputNumber & (1 << 31)) != 1) {
+			inputNumber = inputNumber ^ (1 << 31);
 		}
 	}
-
-
-
 
 
 }
+
+

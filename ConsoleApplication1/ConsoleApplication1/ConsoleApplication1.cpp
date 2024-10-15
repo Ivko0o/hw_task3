@@ -53,6 +53,7 @@ int main()
 	//Turns the days to numbers
 	int days1 = dateToNumber(currentDay,currentMonth,currentYear);
 	int days2 = dateToNumber(day, month, year+1900);
+	int difference = days1 - days2;
 
 
 	cout << "\nCurrent date is: 0" << currentDay << "." << currentMonth << "." << currentYear;
@@ -62,6 +63,8 @@ int main()
 	//Checks the length of the expiration date in days
 	lengthExpiryDate = (inputNumber & check_Length_Expiry_Date) >> 18;
 	cout << "\n" << "Length of the expiry date in days: " << lengthExpiryDate;
+
+
 
 	//Checks the number of controlled bits
 	for (int i = 0; i < 31; i++) {
@@ -93,6 +96,14 @@ int main()
 		if ((inputNumber & (1 << 31)) != 1) {
 			inputNumber = inputNumber ^ (1 << 31);
 		}
+	}
+
+	//Checks if the product is over or in the expiry date
+	if (difference > lengthExpiryDate) {
+		cout << "\n\nToo old!";
+	}
+	if (difference <= lengthExpiryDate) {
+		cout << "\n\nGood!";
 	}
 
 

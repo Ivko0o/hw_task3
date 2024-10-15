@@ -18,8 +18,9 @@ int main()
 	unsigned currentDay = 1;
 	unsigned currentMonth = 11;
 	unsigned currentYear = 2023;
-	unsigned countControlBits = 0; // counts number of 1 bits
+	unsigned countControlBits = 0; // Counts number of 1 bits
 
+	//Needed for checking the bits of the inputNumber
 	unsigned check_Day = 31;
 	unsigned check_Month = 480;
 	unsigned check_Year = 261632;
@@ -30,14 +31,13 @@ int main()
 	std::cout << "Enter a whole positive number to check the expiry date of a product: ";
 	cin >> inputNumber;
 
-	//Checks the day of the expiry date
+	//Checks the day of the production date
 	day = inputNumber & check_Day;
 
-	//Checks the month of the expiry date
+	//Checks the month of the production date
 	month = (inputNumber & check_Month) >> 5;
 
-
-	//Checks the year of the expiry date
+	//Checks the year of the prodcution date
 	year = (inputNumber & check_Year) >> 9;
 
 	//Checks the number of controlled bits
@@ -69,8 +69,8 @@ int main()
 	}
 
 	//Checks if the production date is after current date
-	if (day > currentDay && month > currentMonth && year > currentYear) {
-		cout << "Not possible!";
+	if (day > currentDay && month >= currentMonth && (year+1900) >= currentYear) {
+		cout << "\nNot possible! This way the production date is after the current date!";
 		return -1;
 	}
 
@@ -79,7 +79,6 @@ int main()
 	unsigned days2 = dateToNumber(day, month, year + 1900);
 	unsigned difference = days1 - days2;
 
-
 	cout << "\nCurrent date is: 0" << currentDay << "." << currentMonth << "." << currentYear;
 	cout << "\nThe production date of the product is: " << day << "." << month << "." << year + 1900;
 
@@ -87,9 +86,6 @@ int main()
 	//Checks the length of the expiration date in days
 	lengthExpiryDate = (inputNumber & check_Length_Expiry_Date) >> 18;
 	cout << "\n" << "Length of the expiry date in days: " << lengthExpiryDate;
-
-	std::cout << "\n\nThe number of control bits is: " << countControlBits;
-
 
 	//Checks the most significant bit
 	if (countControlBits % 2 == 0) {
